@@ -1,4 +1,5 @@
-FROM ubuntu:16.04
+#FROM ubuntu:16.04
+FROM resin/rpi-raspbian:stretch
 
 # Install necessary packages for the installer
 RUN apt-get update && apt-get install -y \
