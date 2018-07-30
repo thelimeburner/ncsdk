@@ -1,6 +1,7 @@
 #FROM ubuntu:16.04
+FROM multiarch/ubuntu-core:armhf-xenial
 #FROM resin/rpi-raspbian:stretch
-FROM thelimeburner/tensorflow_armv7l:0.3
+#FROM thelimeburner/tensorflow_armv7l:0.3
 
 # Install necessary packages for the installer
 RUN apt-get update && apt-get install -y \

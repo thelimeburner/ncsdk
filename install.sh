@@ -402,7 +402,7 @@ function install_python_dependencies()
 #                   sets FIND_TENSORFLOW__FOUND_SUPPORTED_VERSION=2 when TensorFlow isn't installed
 function find_tensorflow()
 {
-    SUPPORTED_TENSORFLOW_VERSION=1.7.0
+    SUPPORTED_TENSORFLOW_VERSION=1.9.0
     RC=0
     $PIP_PREFIX pip3 show $1 1> /dev/null || RC=$?
     if [ $RC -eq 0 ]; then
@@ -449,8 +449,8 @@ function install_tensorflow()
         if [ "${INSTALL_TF}" = "yes" ] ; then
             echo "Couldn't find a supported tensorflow version, downloading TensorFlow $SUPPORTED_TENSORFLOW_VERSION"
             # rename wheel for python 3.5
-            WHEEL_DOWNLOAD=tensorflow-1.7.0-cp34-none-any.whl
-            WHEEL=tensorflow-1.7.0-cp35-none-any.whl
+            WHEEL_DOWNLOAD=tensorflow-1.9.0-cp34-none-any.whl
+            WHEEL=tensorflow-1.9.0-cp35-none-any.whl
             [ -f "${WHEEL_DOWNLOAD}" ] && sudo mv -f ${WHEEL_DOWNLOAD} ${WHEEL_DOWNLOAD}.save
             $SUDO_PREFIX wget https://storage.googleapis.com/download.tensorflow.org/deps/pi/2018_05_21/${WHEEL_DOWNLOAD}
             [ -f "${WHEEL}" ] && $SUDO_PREFIX mv -f ${WHEEL} ${WHEEL}.save
@@ -837,6 +837,15 @@ function finalize_installer()
     fi
 }
 
+function install_tensorflow2(){
+	
+    ## Get Wheel
+    wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v1.9.0/tensorflow-1.9.0-cp35-none-linux_armv7l.whl
+    
+    pip3 install https://github.com/lhelontra/tensorflow-on-arm/releases/download/v1.9.0/tensorflow-1.9.0-cp35-none-linux_armv7l.whl
+
+
+}
 
 # main - this is the main function that runs the install
 function main()
@@ -864,7 +873,7 @@ function main()
     install_python_dependencies
 
     ### Install tensorflow and caffe based on settings in ncsdk.conf
-    [ "${INSTALL_TENSORFLOW}" = "yes" ] && install_tensorflow
+    [ "${INSTALL_TENSORFLOW}" = "yes" ] && install_tensorflow2
     [ "${INSTALL_CAFFE}" = "yes" ] && install_caffe
 
     # install SDK based on settings in ncsdk.conf and C/C++ and Python API
